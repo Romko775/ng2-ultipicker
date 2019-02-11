@@ -133,6 +133,41 @@
           }
         }
       }
+    },
+    "ultipicker": {
+      "root": "projects/ultipicker",
+      "sourceRoot": "projects/ultipicker/src",
+      "projectType": "library",
+      "prefix": "ng2",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ultipicker/tsconfig.lib.json",
+            "project": "projects/ultipicker/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ultipicker/src/test.ts",
+            "tsConfig": "projects/ultipicker/tsconfig.spec.json",
+            "karmaConfig": "projects/ultipicker/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ultipicker/tsconfig.lib.json",
+              "projects/ultipicker/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ulti-picker"
