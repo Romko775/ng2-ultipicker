@@ -1,11 +1,11 @@
 <div class="picker">
   <div class="picker-header">
     <button (click)="changeMonth(st.previous)">
-      &lang;
+      <
     </button>
     <span>{{pickerMonth.format('MMMM YYYY')}}</span>
     <button (click)="changeMonth(st.next)">
-      &rang;
+      >
     </button>
   </div>
   <table class="picker-table">
@@ -16,7 +16,7 @@
     <tr *ngFor="let weeks of calendar">
       <td class="week-column">{{weeks.week}}</td>
       <td *ngFor="let day of weeks.days" class="day-cell">
-        <button [ngClass]="getDayClass(day)">
+        <button [ngClass]="getDayClass(day)" (click)="selectDate(day)">
           {{day.format('DD')}}
         </button>
       </td>

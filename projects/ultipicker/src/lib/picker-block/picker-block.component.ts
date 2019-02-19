@@ -32,9 +32,10 @@ export class PickerBlockComponent implements OnInit {
     'St'
   ];
 
-  startWeek = moment().startOf('month').week();
-  endWeek = moment().endOf('month').week();
   pickerMonth: momentImported.Moment = moment();
+  startWeek = moment(this.pickerMonth).startOf('month').week();
+  // endWeek = moment(this.pickerMonth).endOf('month').week();
+  endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
 
   selectedDate: momentImported.Moment;
 
@@ -52,19 +53,22 @@ export class PickerBlockComponent implements OnInit {
   setCalendar(): void {
     this.calendar = [];
     for (let week = this.startWeek; week <= this.endWeek; week++) {
-      console.log(week);
       this.calendar.push({
         week: week,
-        days: Array(7).fill(0).map((n, i) => moment(this.pickerMonth).week(week).startOf('week').clone().add(n + i, 'day'))
+        days: Array(7).fill(0).map((n, i) => {
+            return moment(this.pickerMonth).day(i).week(week);
+          }
+        )
       });
     }
   }
 
-  changeMonth(stage: Stage) {
+  changeMonth(stage: Stage): void {
     if (stage === this.st.previous) {
       this.pickerMonth = moment(this.pickerMonth).subtract(1, 'month');
       this.startWeek = this.pickerMonth.startOf('month').week();
-      this.endWeek = this.pickerMonth.endOf('month').week();
+      // this.endWeek = this.pickerMonth.endOf('month').week();
+      this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
       if (this.endWeek === 1) {
         this.endWeek = 53;
       }
@@ -72,12 +76,25 @@ export class PickerBlockComponent implements OnInit {
     if (stage === this.st.next) {
       this.pickerMonth = moment(this.pickerMonth).add(1, 'month');
       this.startWeek = this.pickerMonth.startOf('month').week();
-      this.endWeek = this.pickerMonth.endOf('month').week();
+      // this.endWeek = this.pickerMonth.endOf('month').week();
+      this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
       if (this.endWeek === 1) {
         this.endWeek = 53;
       }
     }
     this.setCalendar();
+  }
+
+  selectDate(day: momentImported.Moment): void {
+    this.selectedDate = moment(day);
+
+    if (moment(day).startOf('month').isBefore(moment(this.pickerMonth).startOf('month'))) {
+      this.changeMonth(this.st.previous);
+    }
+
+    if (moment(day).startOf('month').isAfter(moment(this.pickerMonth).startOf('month'))) {
+      this.changeMonth(this.st.next);
+    }
   }
 
   getDayClass(day: momentImported.Moment): string {
