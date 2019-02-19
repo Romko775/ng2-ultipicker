@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as momentImported from 'moment';
 
 const moment = momentImported;
@@ -20,32 +20,33 @@ export class Calendar {
 })
 export class PickerBlockComponent implements OnInit {
 
-  st = Stage;
+  @Input() minDate: momentImported.Moment = null;
+  @Input() maxDate: momentImported.Moment = null;
+  @Input() initDate: momentImported.Moment = null;
+  @Input() setDisable = false;
 
-  dayNames: Array<string> = [
-    'Su',
-    'Mo',
-    'Tu',
-    'Wd',
-    'Th',
-    'Fr',
-    'St'
-  ];
+  @Input() dayNames: Array<string> = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
+
+  @Output() onselect: EventEmitter<momentImported.Moment> = new EventEmitter<momentImported.Moment>();
+
+  st = Stage;
 
   pickerMonth: momentImported.Moment = moment();
   startWeek = moment(this.pickerMonth).startOf('month').week();
-  // endWeek = moment(this.pickerMonth).endOf('month').week();
   endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
 
   selectedDate: momentImported.Moment;
-
   calendar: Array<Calendar>;
+
+  leftArrowDisabled = false;
+  rightArrowDisabled = false;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.selectedDate = moment();
+
+    this.initDate ? this.selectedDate = moment(this.initDate) : this.selectedDate = moment();
 
     this.setCalendar();
   }
@@ -67,7 +68,6 @@ export class PickerBlockComponent implements OnInit {
     if (stage === this.st.previous) {
       this.pickerMonth = moment(this.pickerMonth).subtract(1, 'month');
       this.startWeek = this.pickerMonth.startOf('month').week();
-      // this.endWeek = this.pickerMonth.endOf('month').week();
       this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
       if (this.endWeek === 1) {
         this.endWeek = 53;
@@ -76,12 +76,15 @@ export class PickerBlockComponent implements OnInit {
     if (stage === this.st.next) {
       this.pickerMonth = moment(this.pickerMonth).add(1, 'month');
       this.startWeek = this.pickerMonth.startOf('month').week();
-      // this.endWeek = this.pickerMonth.endOf('month').week();
       this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
       if (this.endWeek === 1) {
         this.endWeek = 53;
       }
     }
+
+    this.leftArrowDisabled = this.minDate ? moment(this.pickerMonth.startOf('month')).isSame(this.minDate.startOf('month')) : false;
+    this.rightArrowDisabled = this.maxDate ? moment(this.pickerMonth.startOf('month')).isSame(this.maxDate.startOf('month')) : false;
+
     this.setCalendar();
   }
 
@@ -112,5 +115,13 @@ export class PickerBlockComponent implements OnInit {
     return dayClass.join(' ');
   }
 
+  checkDateRange(day): boolean {
+    return moment(day).isBefore(moment(this.minDate)) || moment(day).isAfter(moment(this.maxDate));
+  }
+
+
+  emitChanges() {
+    this.onselect.emit(this.selectedDate);
+  }
 
 }

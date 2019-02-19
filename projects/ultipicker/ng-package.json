@@ -6,6 +6,10 @@
   },
   "whitelistedNonPeerDependencies": [
     "moment",
-    "ngx-bootstrap"
+    "ngx-bootstrap",
+    "@fortawesome/angular-fontawesome",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-regular-svg-icons",
+    "@fortawesome/free-solid-svg-icons"
   ]
 }

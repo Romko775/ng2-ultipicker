@@ -1,6 +1,6 @@
 .picker {
-  max-width: 260px;
-  min-width: 260px;
+  max-width: 200px;
+  min-width: 200px;
   max-height: 300px;
   min-height: 150px;
   border: 1px solid black;
@@ -10,6 +10,20 @@
     justify-content: space-around;
     margin: 5px 0;
     align-items: center;
+
+    .header-month {
+      width: 110px;
+      text-align: center;
+    }
+
+    .header-button {
+      background-color: transparent;
+      border: 1px solid black;
+      border-radius: 50%;
+    }
+    button:focus {
+      outline:0;
+    }
   }
 
   &-table {
@@ -26,9 +40,12 @@
       text-align: center;
     }
 
+    .dayname-cell {
+      cursor: default;
+    }
+
     .day-cell {
       text-align: center;
-      border: 1px solid black;
 
       button {
         background-color: transparent;
@@ -39,6 +56,16 @@
         text-align: center;
         padding: 0;
         border-radius: 50%;
+      }
+
+      button:focus {
+        outline:0;
+      }
+
+      button:disabled, button[disabled] {
+        cursor: not-allowed;
+        text-decoration: line-through;
+        color: grey !important;
       }
 
       button.current-month {

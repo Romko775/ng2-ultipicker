@@ -1,22 +1,25 @@
 <div class="picker">
   <div class="picker-header">
-    <button (click)="changeMonth(st.previous)">
-      <
+    <button class="header-button" (click)="changeMonth(st.previous)"
+            [disabled]="leftArrowDisabled">
+    <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
     </button>
-    <span>{{pickerMonth.format('MMMM YYYY')}}</span>
-    <button (click)="changeMonth(st.next)">
-      >
+    <span class="header-month">{{pickerMonth.format('MMMM YYYY')}}</span>
+    <button class="header-button" (click)="changeMonth(st.next)"
+            [disabled]="rightArrowDisabled">
+      <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
     </button>
   </div>
+  <hr>
   <table class="picker-table">
     <tr>
-      <th class="week-column">#</th>
-      <th *ngFor="let dayName of dayNames">{{dayName}}</th>
+      <th class="dayname-cell" *ngFor="let dayName of dayNames">{{dayName}}</th>
     </tr>
     <tr *ngFor="let weeks of calendar">
-      <td class="week-column">{{weeks.week}}</td>
       <td *ngFor="let day of weeks.days" class="day-cell">
-        <button [ngClass]="getDayClass(day)" (click)="selectDate(day)">
+        <button [ngClass]="getDayClass(day)"
+                (click)="selectDate(day)"
+                [disabled]="checkDateRange(day)">
           {{day.format('DD')}}
         </button>
       </td>
