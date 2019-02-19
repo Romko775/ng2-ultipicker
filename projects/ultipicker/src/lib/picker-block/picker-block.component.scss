@@ -13,14 +13,44 @@
   &-table {
     margin: 0 auto;
 
+    tr {
+      td {
+        padding: 0;
+      }
+    }
+
     .week-column {
       width: 20px;
       text-align: center;
     }
 
     .day-cell {
-      padding: 3px;
+      text-align: center;
       border: 1px solid black;
+
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        padding: 0;
+        border-radius: 50%;
+      }
+
+      button.current-month {
+        color: black;
+      }
+
+      button.not-current-month {
+        color: grey;
+      }
+
+      button.selected {
+        background-color: blue !important;
+        color: white !important;
+      }
     }
   }
 
