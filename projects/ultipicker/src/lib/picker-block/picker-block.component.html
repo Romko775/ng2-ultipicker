@@ -1,3 +1,21 @@
-<p>
-  picker-block works!
-</p>
+<div class="picker">
+  <div class="picker-header">
+    <button>&lang;</button>
+    <span>{{currentMonth}}</span>
+    <button>&rang;</button>
+  </div>
+  <table class="picker-table">
+    <tr>
+      <th class="week-column">#</th>
+      <th *ngFor="let dayName of dayNames">{{dayName}}</th>
+    </tr>
+    <tr *ngFor="let weeks of calendar">
+      <td class="week-column">{{weeks.week}}</td>
+      <td *ngFor="let day of weeks.days" class="day-cell">
+        <button>
+          {{day.format('DD')}}
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

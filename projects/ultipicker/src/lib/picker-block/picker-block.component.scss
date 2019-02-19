@@ -1,0 +1,27 @@
+.picker {
+  max-width: 300px;
+  max-height: 300px;
+  border: 1px solid black;
+
+  &-header {
+    display: flex;
+    justify-content: space-around;
+    margin: 5px 0;
+    align-items: center;
+  }
+
+  &-table {
+    margin: 0 auto;
+
+    .week-column {
+      width: 20px;
+      text-align: center;
+    }
+
+    .day-cell {
+      padding: 3px;
+      border: 1px solid black;
+    }
+  }
+
+}

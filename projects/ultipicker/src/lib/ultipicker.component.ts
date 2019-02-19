@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'ng2-ultipicker',
   template: `
-    <p>
-      ultipicker works!
-    </p>
+    <ng2-picker-block>
+      
+    </ng2-picker-block>
   `,
   styles: []
 })
