@@ -41,8 +41,6 @@ export class PickerBlockComponent implements OnInit, OnChanges {
   leftArrowDisabled = false;
   rightArrowDisabled = false;
 
-  private propagateChange: (_: any) => {};
-
   constructor() {
   }
 
@@ -68,19 +66,19 @@ export class PickerBlockComponent implements OnInit, OnChanges {
   changeMonth(stage: Stage): void {
     if (stage === this.st.previous) {
       this.pickerMonth = moment(this.pickerMonth).subtract(1, 'month');
-      this.startWeek = this.pickerMonth.startOf('month').week();
-      this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
-      if (this.endWeek === 1) {
-        this.endWeek = 53;
-      }
     }
     if (stage === this.st.next) {
       this.pickerMonth = moment(this.pickerMonth).add(1, 'month');
-      this.startWeek = this.pickerMonth.startOf('month').week();
-      this.endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
-      if (this.endWeek === 1) {
-        this.endWeek = 53;
-      }
+    }
+
+    this.navigateMonth(this.pickerMonth);
+  }
+
+  navigateMonth(date: momentImported.Moment) {
+    this.startWeek = moment(date).startOf('month').week();
+    this.endWeek = moment(date).add(1, 'month').startOf('month').week();
+    if (this.endWeek === 1) {
+      this.endWeek = 53;
     }
 
     this.leftArrowDisabled = this.minDate ? moment(this.pickerMonth.startOf('month')).isSame(this.minDate.startOf('month')) : false;

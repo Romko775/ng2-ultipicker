@@ -119,8 +119,28 @@ export class UltipickerComponent implements OnInit {
   }
 
   setRange(range: Range) {
-    this.componentForm.get('startDate').setValue(range.start);
-    this.componentForm.get('endDate').setValue(range.end);
+
+    let start: momentImported.Moment = range.start;
+    let end: momentImported.Moment = range.end;
+
+    if (start.startOf('day').isBefore(this.minStartDate.startOf('day'))) {
+      start = this.minStartDate;
+    }
+
+    if (start.endOf('day').isAfter(this.maxEndDate.endOf('day'))) {
+      start = this.maxEndDate;
+    }
+
+    if (end.startOf('day').isBefore(this.minStartDate.startOf('day'))) {
+      end = this.minStartDate;
+    }
+
+    if (end.endOf('day').isAfter(this.maxEndDate.endOf('day'))) {
+      end = this.maxEndDate;
+    }
+
+    this.componentForm.get('startDate').setValue(start);
+    this.componentForm.get('endDate').setValue(end);
   }
 
 }
