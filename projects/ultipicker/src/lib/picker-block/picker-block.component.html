@@ -1,12 +1,12 @@
 <div class="picker">
   <div class="picker-header">
     <button class="header-button" (click)="changeMonth(st.previous)"
-            [disabled]="leftArrowDisabled">
+            [disabled]="leftArrowDisabled || setDisable">
     <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
     </button>
     <span class="header-month">{{pickerMonth.format('MMMM YYYY')}}</span>
     <button class="header-button" (click)="changeMonth(st.next)"
-            [disabled]="rightArrowDisabled">
+            [disabled]="rightArrowDisabled || setDisable">
       <fa-icon [icon]="['fas', 'angle-right']"></fa-icon>
     </button>
   </div>
@@ -19,7 +19,7 @@
       <td *ngFor="let day of weeks.days" class="day-cell">
         <button [ngClass]="getDayClass(day)"
                 (click)="selectDate(day)"
-                [disabled]="checkDateRange(day)">
+                [disabled]="checkDateRange(day) || setDisable">
           {{day.format('DD')}}
         </button>
       </td>

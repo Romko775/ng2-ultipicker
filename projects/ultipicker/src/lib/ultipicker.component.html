@@ -1,0 +1,29 @@
+<div>
+  <input type="text">
+</div>
+<span style="margin-bottom: 50px;"></span>
+
+<table class="popup" [formGroup]="componentForm">
+  <tr>
+    <td class="ranges-column">
+      <ul>
+        <li *ngFor="let range of ranges" (click)="setRange(range)">{{range.key}}</li>
+      </ul>
+    </td>
+
+    <td class="start-date-column">
+      <ng2-picker-block (onselect)="setStartDate($event)"
+                        [minDate]="minStartDate"
+                        [maxDate]="calcRangeEndMax"
+                        [initDate]="currentStartDate">
+      </ng2-picker-block>
+    </td>
+    <td class="end-date-column">
+      <ng2-picker-block (onselect)="setEndDate($event)"
+                        [minDate]="calcRangeStartMin"
+                        [maxDate]="maxEndDate"
+                        [initDate]="currentEndDate">
+      </ng2-picker-block>
+    </td>
+  </tr>
+</table>

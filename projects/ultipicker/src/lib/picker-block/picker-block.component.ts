@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as momentImported from 'moment';
 
 const moment = momentImported;
@@ -16,9 +16,9 @@ export class Calendar {
 @Component({
   selector: 'ng2-picker-block',
   templateUrl: './picker-block.component.html',
-  styleUrls: ['./picker-block.component.scss']
+  styleUrls: ['./picker-block.component.scss'],
 })
-export class PickerBlockComponent implements OnInit {
+export class PickerBlockComponent implements OnInit, OnChanges {
 
   @Input() minDate: momentImported.Moment = null;
   @Input() maxDate: momentImported.Moment = null;
@@ -41,11 +41,12 @@ export class PickerBlockComponent implements OnInit {
   leftArrowDisabled = false;
   rightArrowDisabled = false;
 
+  private propagateChange: (_: any) => {};
+
   constructor() {
   }
 
   ngOnInit() {
-
     this.initDate ? this.selectedDate = moment(this.initDate) : this.selectedDate = moment();
 
     this.setCalendar();
@@ -98,6 +99,8 @@ export class PickerBlockComponent implements OnInit {
     if (moment(day).startOf('month').isAfter(moment(this.pickerMonth).startOf('month'))) {
       this.changeMonth(this.st.next);
     }
+
+    this.emitChanges();
   }
 
   getDayClass(day: momentImported.Moment): string {
@@ -116,12 +119,21 @@ export class PickerBlockComponent implements OnInit {
   }
 
   checkDateRange(day): boolean {
-    return moment(day).isBefore(moment(this.minDate)) || moment(day).isAfter(moment(this.maxDate));
+    return !(
+      moment(day).startOf('day').isSameOrAfter(moment(this.minDate).startOf('day'))
+      && moment(day).endOf('day').isSameOrBefore(moment(this.maxDate).endOf('day'))
+    );
   }
 
-
-  emitChanges() {
+  private emitChanges() {
     this.onselect.emit(this.selectedDate);
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.initDate) {
+      const newDate: momentImported.Moment = moment(changes.initDate.currentValue);
+      this.selectedDate = newDate;
+    }
   }
 
 }

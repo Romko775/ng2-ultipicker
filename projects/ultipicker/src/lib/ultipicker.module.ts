@@ -6,6 +6,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 library.add(far, fas);
 
@@ -13,7 +14,9 @@ library.add(far, fas);
   declarations: [UltipickerComponent, PickerBlockComponent],
   imports: [
     CommonModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   exports: [
     UltipickerComponent,
