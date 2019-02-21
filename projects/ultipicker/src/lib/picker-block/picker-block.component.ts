@@ -5,7 +5,8 @@ const moment = momentImported;
 
 export enum Stage {
   next = 'next',
-  previous = 'previous'
+  previous = 'previous',
+  current = 'current'
 }
 
 export class Calendar {
@@ -21,19 +22,23 @@ export class Calendar {
 export class PickerBlockComponent implements OnInit {
 
   private _selectedDate: momentImported.Moment;
-  pickerMonth: momentImported.Moment = moment();
+  private _pickerMonth: momentImported.Moment = moment();
+
+  oldDate: momentImported.Moment = moment();
 
   @Input() minDate: momentImported.Moment = null;
   @Input() maxDate: momentImported.Moment = null;
 
   @Input('defaultDate')
   set selectedDate(date: momentImported.Moment) {
-    console.log(date);
+    // console.log(date.format('DD-MM-YYYY'));
     if (date !== null || date !== undefined) {
       this._selectedDate = date;
     } else {
       this._selectedDate = moment();
     }
+
+    this.setUpDates();
     // this.pickerMonth = this._selectedDate;
   }
 
@@ -41,13 +46,13 @@ export class PickerBlockComponent implements OnInit {
     return this._selectedDate;
   }
 
-  // set pickerMonth(date: momentImported.Moment) {
-  //   this._pickerMonth = date;
-  // }
-  //
-  // get pickerMonth(): momentImported.Moment {
-  //   return this._pickerMonth;
-  // }
+  set pickerMonth(date: momentImported.Moment) {
+    this._pickerMonth = date;
+  }
+
+  get pickerMonth(): momentImported.Moment {
+    return this._pickerMonth;
+  }
 
 
   @Input() setDisable = false;
@@ -64,14 +69,22 @@ export class PickerBlockComponent implements OnInit {
 
   calendar: Array<Calendar>;
 
-  leftArrowDisabled = false;
-  rightArrowDisabled = false;
+  _leftArrowDisabled = false;
+  _rightArrowDisabled = false;
 
   constructor() {
   }
 
   ngOnInit() {
     this.setCalendar();
+  }
+
+  setUpDates(): void {
+    if (!this.oldDate.isSame(this.selectedDate)) {
+      this.oldDate = this.selectedDate.clone();
+      this.pickerMonth = this.selectedDate;
+      this.changeMonth(this.st.current);
+    }
   }
 
   setCalendar(): void {
@@ -94,6 +107,9 @@ export class PickerBlockComponent implements OnInit {
     if (stage === this.st.next) {
       this.pickerMonth = moment(this.pickerMonth).add(1, 'month');
     }
+    if (stage === this.st.current) {
+      this.pickerMonth = moment(this.pickerMonth).startOf('day');
+    }
 
     this.navigateMonth(this.pickerMonth);
   }
@@ -105,10 +121,35 @@ export class PickerBlockComponent implements OnInit {
       this.endWeek = 53;
     }
 
-    this.leftArrowDisabled = this.minDate ? moment(this.pickerMonth.startOf('month')).isSame(this.minDate.startOf('month')) : false;
-    this.rightArrowDisabled = this.maxDate ? moment(this.pickerMonth.startOf('month')).isSame(this.maxDate.startOf('month')) : false;
+    if (this.minDate) {
+      this.leftArrowDisabled = this.pickerMonth.month() === this.minDate.month();
+    } else {
+      this.leftArrowDisabled = false;
+    }
+
+    if (this.maxDate) {
+      this.rightArrowDisabled = this.pickerMonth.month() === this.maxDate.month();
+    } else {
+      this.rightArrowDisabled = false;
+    }
 
     this.setCalendar();
+  }
+
+  get leftArrowDisabled(): boolean {
+    return this._leftArrowDisabled;
+  }
+
+  set leftArrowDisabled(bool: boolean) {
+    this._leftArrowDisabled = bool;
+  }
+
+  get rightArrowDisabled(): boolean {
+    return this._rightArrowDisabled;
+  }
+
+  set rightArrowDisabled(bool: boolean) {
+    this._rightArrowDisabled = bool;
   }
 
   selectDate(day: momentImported.Moment): void {
@@ -142,8 +183,10 @@ export class PickerBlockComponent implements OnInit {
 
   checkDateRange(day): boolean {
     return !(
-      moment(day).startOf('day').isSameOrAfter(moment(this.minDate).startOf('day'))
-      && moment(day).endOf('day').isSameOrBefore(moment(this.maxDate).endOf('day'))
+      moment(day).startOf('day').isBetween(
+        moment(this.minDate).subtract(1, 'day').endOf('day'),
+        moment(this.maxDate).endOf('day')
+      )
     );
   }
 
