@@ -15,14 +15,14 @@
       <ng2-picker-block (onselect)="setStartDate($event)"
                         [minDate]="minStartDate"
                         [maxDate]="calcRangeEndMax"
-                        [initDate]="currentStartDate">
+                        [defaultDate]="currentStartDate">
       </ng2-picker-block>
     </td>
     <td class="end-date-column">
       <ng2-picker-block (onselect)="setEndDate($event)"
                         [minDate]="calcRangeStartMin"
                         [maxDate]="maxEndDate"
-                        [initDate]="currentEndDate">
+                        [defaultDate]="currentEndDate">
       </ng2-picker-block>
     </td>
   </tr>

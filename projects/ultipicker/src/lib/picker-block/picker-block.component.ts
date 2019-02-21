@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
 import * as momentImported from 'moment';
 
 const moment = momentImported;
@@ -18,11 +18,38 @@ export class Calendar {
   templateUrl: './picker-block.component.html',
   styleUrls: ['./picker-block.component.scss'],
 })
-export class PickerBlockComponent implements OnInit, OnChanges {
+export class PickerBlockComponent implements OnInit {
+
+  private _selectedDate: momentImported.Moment;
+  pickerMonth: momentImported.Moment = moment();
 
   @Input() minDate: momentImported.Moment = null;
   @Input() maxDate: momentImported.Moment = null;
-  @Input() initDate: momentImported.Moment = null;
+
+  @Input('defaultDate')
+  set selectedDate(date: momentImported.Moment) {
+    console.log(date);
+    if (date !== null || date !== undefined) {
+      this._selectedDate = date;
+    } else {
+      this._selectedDate = moment();
+    }
+    // this.pickerMonth = this._selectedDate;
+  }
+
+  get selectedDate(): momentImported.Moment {
+    return this._selectedDate;
+  }
+
+  // set pickerMonth(date: momentImported.Moment) {
+  //   this._pickerMonth = date;
+  // }
+  //
+  // get pickerMonth(): momentImported.Moment {
+  //   return this._pickerMonth;
+  // }
+
+
   @Input() setDisable = false;
 
   @Input() dayNames: Array<string> = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
@@ -31,11 +58,10 @@ export class PickerBlockComponent implements OnInit, OnChanges {
 
   st = Stage;
 
-  pickerMonth: momentImported.Moment = moment();
   startWeek = moment(this.pickerMonth).startOf('month').week();
   endWeek = moment(this.pickerMonth).add(1, 'month').startOf('month').week();
 
-  selectedDate: momentImported.Moment;
+
   calendar: Array<Calendar>;
 
   leftArrowDisabled = false;
@@ -45,8 +71,6 @@ export class PickerBlockComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.initDate ? this.selectedDate = moment(this.initDate) : this.selectedDate = moment();
-
     this.setCalendar();
   }
 
@@ -125,13 +149,6 @@ export class PickerBlockComponent implements OnInit, OnChanges {
 
   private emitChanges() {
     this.onselect.emit(this.selectedDate);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.initDate) {
-      const newDate: momentImported.Moment = moment(changes.initDate.currentValue);
-      this.selectedDate = newDate;
-    }
   }
 
 }
