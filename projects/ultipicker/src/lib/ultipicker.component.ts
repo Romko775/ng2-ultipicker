@@ -3,16 +3,19 @@ import * as momentImported from 'moment';
 import {unitOfTime} from 'moment';
 import {FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import * as Inputmask from 'inputmask/dist/inputmask/inputmask.numeric.extensions';
-
-// export const DATE_MASK = '99/99/9999';
-// export const MONTH_MASK = '99/9999';
+import {fromEvent} from 'rxjs';
 
 const moment = momentImported;
 
-export class Range {
+class Range {
   key: string;
   start: momentImported.Moment;
   end: momentImported.Moment;
+}
+
+class Memo {
+  startDate: momentImported.Moment | null;
+  endDate: momentImported.Moment | null;
 }
 
 @Component({
@@ -41,8 +44,15 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
   @Input() inputDayFormat = 'MM-DD-YYYY';
   @Input() inputMonthFormat = 'MM-YYYY';
 
+  private memoDate: Memo = {
+    startDate: null,
+    endDate: null
+  };
+
   dayMask: string;
+  private regexD;
   monthMask: string;
+  private regexMonth;
 
   ranges: Array<Range> = [
     {
@@ -94,8 +104,19 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
 
-    this.dayMask = this.inputDayFormat.replace(/\w/g, '9');
-    this.monthMask = this.inputMonthFormat.replace(/\w/g, '9');
+    this.memoDate = {
+      startDate: this.defaultStartDate,
+      endDate: this.defaultEndDate
+    };
+
+    if (this.mode !== 'day') {
+      this.monthMask = this.inputMonthFormat.replace(/\w/g, '9');
+      this.regexD = new RegExp(this.monthMask.replace(/\W/g, '\\W').replace(/\d/g, '\\d'));
+    } else {
+      this.dayMask = this.inputDayFormat.replace(/\w/g, '9');
+      this.regexD = new RegExp(this.dayMask.replace(/\W/g, '\\W').replace(/\d/g, '\\d'));
+    }
+
 
     this.componentForm = this.fb.group({
       startDate: [this.defaultStartDate, [
@@ -105,6 +126,22 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
         Validators.required
       ]],
     });
+
+    fromEvent(this.startInput.nativeElement, 'keyup').subscribe(() => {
+      const val = this.startInput.nativeElement.value;
+      if (this.regexD.test(this.startInput.nativeElement.value)) {
+        this.componentForm.get('startDate').setValue(moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat]));
+      }
+    });
+
+    fromEvent(this.endInput.nativeElement, 'keyup').subscribe(() => {
+      const val = this.endInput.nativeElement.value;
+      if (this.regexD.test(this.endInput.nativeElement.value)) {
+        this.componentForm.get('endDate').setValue(moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat]));
+      }
+    });
+
+
   }
 
   ngAfterViewInit(): void {
