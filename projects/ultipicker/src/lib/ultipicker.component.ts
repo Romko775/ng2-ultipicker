@@ -130,14 +130,28 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
     fromEvent(this.startInput.nativeElement, 'keyup').subscribe(() => {
       const val = this.startInput.nativeElement.value;
       if (this.regexD.test(this.startInput.nativeElement.value)) {
-        this.componentForm.get('startDate').setValue(moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat]));
+
+        const obj: Range = {
+          key: 'keyup-start',
+          start: moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat]),
+          end: this.componentForm.get('endDate').value
+        };
+
+        this.setRange(obj);
       }
     });
 
     fromEvent(this.endInput.nativeElement, 'keyup').subscribe(() => {
       const val = this.endInput.nativeElement.value;
       if (this.regexD.test(this.endInput.nativeElement.value)) {
-        this.componentForm.get('endDate').setValue(moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat]));
+
+        const obj: Range = {
+          key: 'keyup-end',
+          start: this.componentForm.get('startDate').value,
+          end: moment(val, [this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat])
+        };
+
+        this.setRange(obj);
       }
     });
 
@@ -184,6 +198,10 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
     return moment(this.componentForm.get('endDate').value).format(this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat);
   }
 
+  private getValue(val) {
+    return this.componentForm.get(val).value;
+  }
+
   setRange(range: Range) {
 
     let start: momentImported.Moment = range.start;
@@ -193,12 +211,12 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
       start = this.minStartDate;
     }
 
-    if (start.endOf('day').isAfter(this.maxEndDate.endOf('day'))) {
-      start = this.maxEndDate;
+    if (start.endOf('day').isAfter(this.getValue('endDate').endOf('day'))) {
+      start = this.getValue('endDate').clone();
     }
 
-    if (end.startOf('day').isBefore(this.minStartDate.startOf('day'))) {
-      end = this.minStartDate;
+    if (end.startOf('day').isBefore(this.getValue('startDate').startOf('day'))) {
+      end = this.getValue('startDate').clone();
     }
 
     if (end.endOf('day').isAfter(this.maxEndDate.endOf('day'))) {
