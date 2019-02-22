@@ -2,14 +2,13 @@ button:focus {
   outline: 0;
 }
 
-.popup {
+.popup-table {
   border: 1px solid red;
 
   tr {
     td {
       padding: 0;
       align-items: flex-start;
-      height: 250px;
       vertical-align: top;
     }
   }
@@ -40,9 +39,52 @@ button:focus {
 
   .start-date-column {
     padding: 5px 5px 0 5px !important;
+    height: 250px;
+
+    input {
+      width: 200px;
+      max-width: 200px;
+      margin-bottom: 5px;
+      text-align: center;
+    }
   }
 
   .end-date-column {
     padding: 5px 5px 0 5px !important;
+    height: 250px;
+
+    input {
+      width: 200px;
+      max-width: 200px;
+      margin-bottom: 5px;
+      text-align: center;
+    }
+  }
+
+  .popup-bottom {
+
+    border: 1px solid green;
+    border-top: 1px solid black;
+    box-sizing: border-box;
+
+    td {
+      height: 30px !important;
+      box-sizing: border-box;
+      padding: 5px;
+    }
+
+    &-buttons {
+
+      text-align: right;
+
+      button {
+        min-width: 50px;
+        max-width: 100px;
+      }
+      .close-button {
+        background-color: #C0C0C0;
+        color: white;
+      }
+    }
   }
 }

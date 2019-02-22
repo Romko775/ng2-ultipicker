@@ -1,7 +1,11 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as momentImported from 'moment';
 import {unitOfTime} from 'moment';
 import {FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import * as Inputmask from 'inputmask/dist/inputmask/inputmask.numeric.extensions';
+
+// export const DATE_MASK = '99/99/9999';
+// export const MONTH_MASK = '99/9999';
 
 const moment = momentImported;
 
@@ -21,15 +25,24 @@ export class Range {
       useExisting: forwardRef(() => UltipickerComponent),
       multi: true
     }
-  ]
+  ],
+  encapsulation: ViewEncapsulation.None
 })
-export class UltipickerComponent implements OnInit {
+export class UltipickerComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('startInput') startInput: ElementRef;
+  @ViewChild('endInput') endInput: ElementRef;
 
   @Input() minStartDate: momentImported.Moment = null;
   @Input() maxEndDate: momentImported.Moment = null;
   @Input() defaultStartDate: momentImported.Moment = moment();
   @Input() defaultEndDate: momentImported.Moment = moment();
   @Input() mode: unitOfTime.StartOf = 'day';
+  @Input() inputDayFormat = 'MM-DD-YYYY';
+  @Input() inputMonthFormat = 'MM-YYYY';
+
+  dayMask: string;
+  monthMask: string;
 
   ranges: Array<Range> = [
     {
@@ -80,6 +93,10 @@ export class UltipickerComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.dayMask = this.inputDayFormat.replace(/\w/g, '9');
+    this.monthMask = this.inputMonthFormat.replace(/\w/g, '9');
+
     this.componentForm = this.fb.group({
       startDate: [this.defaultStartDate, [
         Validators.required
@@ -88,10 +105,22 @@ export class UltipickerComponent implements OnInit {
         Validators.required
       ]],
     });
+  }
 
-    // setInterval(() => {
-    //   console.log(this.componentForm.value);
-    // }, 3000);
+  ngAfterViewInit(): void {
+    setTimeout(() => {
+      const startMask = new Inputmask({
+        mask: this.mode === 'day' ? this.dayMask : this.monthMask,
+        placeholder: '\u2000'
+      });
+      startMask.mask(this.startInput);
+
+      const endMask = new Inputmask({
+        mask: this.mode === 'day' ? this.dayMask : this.monthMask,
+        placeholder: '\u2000'
+      });
+      endMask.mask(this.endInput);
+    });
   }
 
   setStartDate(date: momentImported.Moment) {
@@ -110,12 +139,12 @@ export class UltipickerComponent implements OnInit {
     return moment(this.componentForm.get('endDate').value);
   }
 
-  get calcRangeStartMin(): momentImported.Moment {
-    return moment(this.componentForm.get('startDate').value);
+  get formatStartDate(): string {
+    return moment(this.componentForm.get('startDate').value).format(this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat);
   }
 
-  get calcRangeEndMax(): momentImported.Moment {
-    return moment(this.componentForm.get('endDate').value);
+  get formatEndDate(): string {
+    return moment(this.componentForm.get('endDate').value).format(this.mode === 'day' ? this.inputDayFormat : this.inputMonthFormat);
   }
 
   setRange(range: Range) {

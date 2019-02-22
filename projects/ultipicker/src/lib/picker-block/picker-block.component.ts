@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
 import * as momentImported from 'moment';
 
 const moment = momentImported;
@@ -18,6 +18,7 @@ export class Calendar {
   selector: 'ng2-picker-block',
   templateUrl: './picker-block.component.html',
   styleUrls: ['./picker-block.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PickerBlockComponent implements OnInit {
 
