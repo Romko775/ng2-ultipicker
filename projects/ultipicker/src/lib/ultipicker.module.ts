@@ -7,11 +7,13 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { UltipickerDualComponent } from './ultipicker-dual/ultipicker-dual.component';
+import { UltipickerMonoComponent } from './ultipicker-mono/ultipicker-mono.component';
 
 library.add(far, fas);
 
 @NgModule({
-  declarations: [UltipickerComponent, PickerBlockComponent],
+  declarations: [UltipickerComponent, PickerBlockComponent, UltipickerDualComponent, UltipickerMonoComponent],
   imports: [
     CommonModule,
     FontAwesomeModule,
@@ -19,8 +21,8 @@ library.add(far, fas);
     FormsModule
   ],
   exports: [
-    PickerBlockComponent,
-    UltipickerComponent,
+    UltipickerDualComponent,
+    UltipickerMonoComponent,
     FontAwesomeModule
   ]
 })
