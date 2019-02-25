@@ -45,6 +45,9 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
   @Input() inputMonthFormat = 'MM-YYYY';
   @Input() separator = ' - ';
 
+  @Input() dayNames;
+  @Input() monthNames;
+
   private memoDate: Memo = {
     startDate: null,
     endDate: null
@@ -56,7 +59,7 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
 
   pickerVisibility = false;
 
-  ranges: Array<Range> = [
+  @Input() ranges: Array<Range> = [
     {
       key: 'Today',
       start: moment(),

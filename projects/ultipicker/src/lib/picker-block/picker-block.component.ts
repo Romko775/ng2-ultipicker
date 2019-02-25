@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewEncapsulation} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation} from '@angular/core';
 import * as momentImported from 'moment';
 
 const moment = momentImported;
@@ -95,6 +95,20 @@ export class PickerBlockComponent implements OnInit {
   @Input() setDisable = false;
 
   @Input() dayNames: Array<string> = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
+  @Input() monthNames: Array<string> = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
 
   @Output() onselect: EventEmitter<momentImported.Moment> = new EventEmitter<momentImported.Moment>();
 
@@ -122,8 +136,12 @@ export class PickerBlockComponent implements OnInit {
   }
 
   setUpArrows() {
-    this.minDate ? this.leftArrowDisabled = this.pickerMonth.month() === this.minDate.month() : this.leftArrowDisabled = false;
-    this.maxDate ? this.rightArrowDisabled = this.pickerMonth.month() === this.maxDate.month() : this.rightArrowDisabled = false;
+    this.minDate ?
+      this.leftArrowDisabled = this.pickerMonth.month() === this.minDate.month() && this.pickerMonth.year() === this.minDate.year()
+      : this.leftArrowDisabled = false;
+    this.maxDate ?
+      this.rightArrowDisabled = this.pickerMonth.month() === this.maxDate.month() && this.pickerMonth.year() === this.maxDate.year()
+      : this.rightArrowDisabled = false;
   }
 
   setCalendar(): void {

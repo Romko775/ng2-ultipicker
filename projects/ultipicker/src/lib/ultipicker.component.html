@@ -21,6 +21,8 @@
       <td class="start-date-column">
         <input type="text" #startInput [value]="formatStartDate">
         <ng2-picker-block (onselect)="setStartDate($event)"
+                          [monthNames]="monthNames"
+                          [dayNames]="dayNames"
                           [minDate]="minStartDate"
                           [maxDate]="currentEndDate"
                           [defaultDate]="currentStartDate">
@@ -29,6 +31,8 @@
       <td class="end-date-column">
         <input type="text" #endInput [value]="formatEndDate">
         <ng2-picker-block (onselect)="setEndDate($event)"
+                          [monthNames]="monthNames"
+                          [dayNames]="dayNames"
                           [minDate]="currentStartDate"
                           [maxDate]="maxEndDate"
                           [defaultDate]="currentEndDate">

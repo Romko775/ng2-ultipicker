@@ -19,6 +19,7 @@ library.add(far, fas);
     FormsModule
   ],
   exports: [
+    PickerBlockComponent,
     UltipickerComponent,
     FontAwesomeModule
   ]
