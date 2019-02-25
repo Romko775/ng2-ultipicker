@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { UltipickerComponent } from './ultipicker.component';
 import { PickerBlockComponent } from './picker-block/picker-block.component';
 import {CommonModule} from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -13,7 +12,11 @@ import { UltipickerMonoComponent } from './ultipicker-mono/ultipicker-mono.compo
 library.add(far, fas);
 
 @NgModule({
-  declarations: [UltipickerComponent, PickerBlockComponent, UltipickerDualComponent, UltipickerMonoComponent],
+  declarations: [
+    PickerBlockComponent,
+    UltipickerDualComponent,
+    UltipickerMonoComponent
+  ],
   imports: [
     CommonModule,
     FontAwesomeModule,
