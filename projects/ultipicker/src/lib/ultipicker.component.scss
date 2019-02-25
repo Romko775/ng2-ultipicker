@@ -1,9 +1,34 @@
+.form-control:focus, .btn:focus {
+  border-color: #ccc;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+
 button:focus {
   outline: 0;
 }
 
+input {
+  text-align: center !important;
+}
+
+.ultipicker {
+  width: 400px;
+  position: relative;
+  display: inline-block;
+}
+
+
 .popup-table {
-  border: 1px solid red;
+  box-shadow: 0 0 20px grey;
+  border: none;
+
+  position: absolute;
+  z-index: 1;
+
+  background-color: white;
 
   tr {
     td {
@@ -16,18 +41,19 @@ button:focus {
   .ranges-column {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid black;
 
     ul {
       min-width: 100px;
       list-style: none;
       margin: 0;
-      padding: 0;
+      //padding: 0;
+      padding: 10px 0 0 0;
 
       li {
         font-size: 12px;
         padding: 8px 12px;
         cursor: pointer;
+        border-right: 1px solid grey;
       }
 
       li:hover {
@@ -38,7 +64,7 @@ button:focus {
   }
 
   .start-date-column {
-    padding: 5px 5px 0 5px !important;
+    padding: 10px 5px 0 5px !important;
     height: 250px;
 
     input {
@@ -50,7 +76,7 @@ button:focus {
   }
 
   .end-date-column {
-    padding: 5px 5px 0 5px !important;
+    padding: 10px 5px 0 5px !important;
     height: 250px;
 
     input {
@@ -62,9 +88,6 @@ button:focus {
   }
 
   .popup-bottom {
-
-    border: 1px solid green;
-    border-top: 1px solid black;
     box-sizing: border-box;
 
     td {
@@ -82,9 +105,19 @@ button:focus {
         max-width: 100px;
       }
       .close-button {
-        background-color: #C0C0C0;
-        color: white;
+
       }
     }
   }
+}
+
+.popup-table::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%;
+  left: 25%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent white transparent;
 }

@@ -43,6 +43,7 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
   @Input() mode: unitOfTime.StartOf = 'day';
   @Input() inputDayFormat = 'MM-DD-YYYY';
   @Input() inputMonthFormat = 'MM-YYYY';
+  @Input() separator = ' - ';
 
   private memoDate: Memo = {
     startDate: null,
@@ -52,7 +53,8 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
   dayMask: string;
   private regexD;
   monthMask: string;
-  private regexMonth;
+
+  pickerVisibility = false;
 
   ranges: Array<Range> = [
     {
@@ -226,5 +228,22 @@ export class UltipickerComponent implements OnInit, AfterViewInit {
     this.componentForm.get('startDate').setValue(start);
     this.componentForm.get('endDate').setValue(end);
   }
+
+  get mainInput() {
+    return `${this.formatStartDate}${this.separator}${this.formatEndDate}`;
+  }
+
+  togglePicker(): void {
+    this.pickerVisibility ? this.closePicker() : this.openPicker();
+  }
+
+  openPicker(): void {
+    this.pickerVisibility = true;
+  }
+
+  closePicker(): void {
+    this.pickerVisibility = false;
+  }
+
 
 }
