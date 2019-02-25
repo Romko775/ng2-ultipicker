@@ -1,11 +1,15 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import {UltipickerDualComponent} from '../../projects/ultipicker/src/lib/ultipicker-dual/ultipicker-dual.component';
+import {UltipickerMonoComponent} from '../../projects/ultipicker/src/lib/ultipicker-mono/ultipicker-mono.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        UltipickerDualComponent,
+        UltipickerMonoComponent
       ],
     }).compileComponents();
   }));

@@ -40,9 +40,9 @@ export class UltipickerDualComponent implements OnInit, AfterViewInit {
   @Input() maxEndDate: momentImported.Moment = null;
   @Input() defaultStartDate: momentImported.Moment = moment();
   @Input() defaultEndDate: momentImported.Moment = moment();
-  @Input() mode: unitOfTime.StartOf = 'day';
+   mode: unitOfTime.StartOf = 'day';
   @Input() inputDayFormat = 'MM-DD-YYYY';
-  @Input() inputMonthFormat = 'MM-YYYY';
+   inputMonthFormat = 'MM-YYYY';
   @Input() separator = ' - ';
 
   @Input() dayNames;

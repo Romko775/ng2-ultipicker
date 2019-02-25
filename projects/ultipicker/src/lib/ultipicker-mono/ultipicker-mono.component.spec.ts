@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UltipickerMonoComponent } from './ultipicker-mono.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {FormBuilder} from '@angular/forms';
 
 describe('UltipickerMonoComponent', () => {
   let component: UltipickerMonoComponent;
@@ -8,7 +10,15 @@ describe('UltipickerMonoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UltipickerMonoComponent ]
+      declarations: [
+        UltipickerMonoComponent
+      ],
+      imports: [
+        FontAwesomeModule
+      ],
+      providers: [
+        FormBuilder,
+      ]
     })
     .compileComponents();
   }));

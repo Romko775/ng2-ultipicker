@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UltipickerDualComponent } from './ultipicker-dual.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {FormBuilder} from '@angular/forms';
 
 describe('UltipickerDualComponent', () => {
   let component: UltipickerDualComponent;
@@ -8,7 +10,15 @@ describe('UltipickerDualComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UltipickerDualComponent ]
+      declarations: [
+        UltipickerDualComponent
+      ],
+      imports: [
+        FontAwesomeModule
+      ],
+      providers: [
+        FormBuilder
+      ]
     })
     .compileComponents();
   }));

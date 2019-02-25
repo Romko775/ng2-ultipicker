@@ -25,7 +25,13 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeHeadlessProj: {
+        base: 'ChromeHeadless',
+        flags: ['--disable-translate', '--disable-extensions', '--no-sandbox'],
+      }
+    },
+    browsers: ['ChromeHeadlessProj'],
     singleRun: false
   });
 };

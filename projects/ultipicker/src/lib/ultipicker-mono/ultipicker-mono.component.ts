@@ -32,10 +32,9 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
   @Input() minDate: momentImported.Moment = null;
   @Input() maxDate: momentImported.Moment = null;
   @Input() defaultDate: momentImported.Moment = moment();
-  @Input() mode: unitOfTime.StartOf = 'day';
+   mode: unitOfTime.StartOf = 'day';
   @Input() inputDayFormat = 'MM-DD-YYYY';
-  @Input() inputMonthFormat = 'MM-YYYY';
-  @Input() separator = ' - ';
+   inputMonthFormat = 'MM-YYYY';
 
   @Input() dayNames;
   @Input() monthNames;
