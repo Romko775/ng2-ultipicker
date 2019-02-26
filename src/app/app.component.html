@@ -1,46 +1,37 @@
-<div>
-  <ng2-ultipicker-dual [minStartDate]="minDate"
-                  [maxEndDate]="maxDate"
-                  [defaultStartDate]="defaultStartDate"
-                  [defaultEndDate]="defaultEndDate"
-                  [monthNames]="monthNames"
-                  [dayNames]="dayNames">
-  </ng2-ultipicker-dual>
+<!--<div class="dual-picker" [formGroup]="dualForm">-->
+  <!--<ng2-ultipicker-dual [minStartDate]="minDate"-->
+                       <!--[maxEndDate]="maxDate"-->
+                       <!--[defaultStartDate]="defaultStartDate"-->
+                       <!--[defaultEndDate]="defaultEndDate"-->
+                       <!--[formControlName]="'date'">-->
+  <!--</ng2-ultipicker-dual>-->
+<!--</div>-->
 
-  <p>
-    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-    aperiam,
-    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-    voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-    velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
-    enim
-    ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-    consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-    vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-  </p>
+<div class="mono-picker" [formGroup]="monoForm">
 
+  <div style="max-width: 300px !important;">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="autoclose" [formControlName]="'autoClose'">
+      <label class="form-check-label" for="autoclose">Enable autoclose</label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="hasmindate" [formControlName]="'hasMinDate'">
+      <label class="form-check-label" for="hasmindate">Enable min date</label>
+    </div>
+
+    <div class="form-group">
+      <label for="mMindate">Minimal date</label>
+      <input #monoMinInput class="form-control" id="mMindate" type="text">
+    </div>
+  </div>
 
   <ng2-ultipicker-mono [minDate]="minDate"
                        [maxDate]="maxDate"
                        [defaultDate]="defaultStartDate"
-                       [monthNames]="monthNames"
-                       [dayNames]="dayNames"
-                       [autoClose]="true">
+                       [autoClose]="getValueM('autoClose')"
+                       [formControlName]="'date'">
   </ng2-ultipicker-mono>
-
-  <p>
-    "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem
-    aperiam,
-    eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam
-    voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-    voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci
-    velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut
-    enim
-    ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi
-    consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur,
-    vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-  </p>
 
 </div>
 

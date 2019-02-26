@@ -4,8 +4,9 @@
             [disabled]="leftArrowDisabled || setDisable">
     <fa-icon [icon]="['fas', 'angle-left']"></fa-icon>
     </button>
-    <span class="header-month">
-      {{monthNames[pickerMonth.month()]}} {{pickerMonth.format('YYYY')}}</span>
+    <span class="header-month" *ngIf="pickerMonth && monthNames">
+      {{monthNames[pickerMonth.month()]}} {{pickerMonth.format('YYYY')}}
+    </span>
 
     <button class="header-button" (click)="changeMonth(st.next)"
             [disabled]="rightArrowDisabled || setDisable">

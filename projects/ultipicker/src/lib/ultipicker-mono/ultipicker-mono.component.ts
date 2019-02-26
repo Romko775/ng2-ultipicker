@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as momentImported from 'moment';
 import {unitOfTime} from 'moment';
-import {FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import * as Inputmask from 'inputmask/dist/inputmask/inputmask.numeric.extensions';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Subscription} from 'rxjs';
 
 const moment = momentImported;
 
@@ -25,16 +25,16 @@ class DefaultSet {
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class UltipickerMonoComponent implements OnInit, AfterViewInit {
+export class UltipickerMonoComponent implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
 
   @ViewChild('pickerInput') pickerInput: ElementRef;
 
   @Input() minDate: momentImported.Moment = null;
   @Input() maxDate: momentImported.Moment = null;
   @Input() defaultDate: momentImported.Moment = moment();
-   mode: unitOfTime.StartOf = 'day';
+  mode: unitOfTime.StartOf = 'day';
   @Input() inputDayFormat = 'MM-DD-YYYY';
-   inputMonthFormat = 'MM-YYYY';
+  inputMonthFormat = 'MM-YYYY';
 
   @Input() autoClose = false;
 
@@ -69,6 +69,8 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
   memoDate: momentImported.Moment = moment();
 
   componentForm: FormGroup;
+  componentFormSub: Subscription;
+  private propagateChange: (_: any) => {};
 
   constructor(private fb: FormBuilder) {
   }
@@ -88,6 +90,10 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
       selectedDate: [this.defaultDate]
     });
 
+    this.componentForm.valueChanges.subscribe(() => {
+      this.fireChanges();
+    });
+
     fromEvent(this.pickerInput.nativeElement, 'keyup').subscribe(() => {
       const val = this.pickerInput.nativeElement.value;
       if (this.regexD.test(this.pickerInput.nativeElement.value)) {
@@ -100,8 +106,12 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
         this.setDefault(obj);
       }
     });
+  }
 
-
+  ngOnDestroy(): void {
+    if (this.componentFormSub) {
+      this.componentFormSub.unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -156,5 +166,24 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
 
   closePicker(): void {
     this.pickerVisibility = false;
+  }
+
+  private fireChanges() {
+    if (this.propagateChange) {
+      this.propagateChange(this.componentForm.get('selectedDate').value);
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+  }
+
+  writeValue(obj: any): void {
   }
 }

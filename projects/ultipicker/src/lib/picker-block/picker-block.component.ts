@@ -95,20 +95,33 @@ export class PickerBlockComponent implements OnInit {
   @Input() setDisable = false;
 
   @Input() dayNames: Array<string> = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
-  @Input() monthNames: Array<string> = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+
+  private _monthNames: Array<string>;
+  @Input('monthNames')
+  set monthNames(val: Array<string>) {
+    if (val && val.length > 0) {
+      this._monthNames = val;
+    } else {
+      this._monthNames = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December'
+      ];
+    }
+  }
+
+  get monthNames(): Array<string> {
+    return this._monthNames;
+  }
 
   @Output() onselect: EventEmitter<momentImported.Moment> = new EventEmitter<momentImported.Moment>();
 
@@ -129,7 +142,7 @@ export class PickerBlockComponent implements OnInit {
 
   setUpDates(): void {
     if (!this.oldDate.isSame(this.selectedDate)) {
-      this.oldDate = this.selectedDate.clone();
+      this.oldDate = this.selectedDate;
       this.pickerMonth = this.selectedDate;
       this.changeMonth(this.st.current);
     }

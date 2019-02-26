@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnDestroy, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import * as momentImported from 'moment';
 import {unitOfTime} from 'moment';
-import {FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
+import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators} from '@angular/forms';
 import * as Inputmask from 'inputmask/dist/inputmask/inputmask.numeric.extensions';
-import {fromEvent} from 'rxjs';
+import {fromEvent, Subscription} from 'rxjs';
 
 const moment = momentImported;
 
@@ -31,7 +31,7 @@ class Memo {
   ],
   encapsulation: ViewEncapsulation.None
 })
-export class UltipickerDualComponent implements OnInit, AfterViewInit {
+export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit, ControlValueAccessor {
 
   @ViewChild('startInput') startInput: ElementRef;
   @ViewChild('endInput') endInput: ElementRef;
@@ -103,6 +103,8 @@ export class UltipickerDualComponent implements OnInit, AfterViewInit {
   ];
 
   componentForm: FormGroup;
+  componentFormSub: Subscription;
+  private propagateChange: (_: any) => {};
 
   constructor(private fb: FormBuilder) {
   }
@@ -132,6 +134,10 @@ export class UltipickerDualComponent implements OnInit, AfterViewInit {
       ]],
     });
 
+    this.componentForm.valueChanges.subscribe(() => {
+      this.fireChanges();
+    });
+
     fromEvent(this.startInput.nativeElement, 'keyup').subscribe(() => {
       const val = this.startInput.nativeElement.value;
       if (this.regexD.test(this.startInput.nativeElement.value)) {
@@ -159,8 +165,12 @@ export class UltipickerDualComponent implements OnInit, AfterViewInit {
         this.setRange(obj);
       }
     });
+  }
 
-
+  ngOnDestroy(): void {
+    if (this.componentFormSub) {
+      this.componentFormSub.unsubscribe();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -246,6 +256,25 @@ export class UltipickerDualComponent implements OnInit, AfterViewInit {
 
   closePicker(): void {
     this.pickerVisibility = false;
+  }
+
+  private fireChanges() {
+    if (this.propagateChange) {
+      this.propagateChange(this.componentForm.value);
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+  }
+
+  writeValue(obj: any): void {
   }
 
 
