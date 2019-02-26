@@ -28,7 +28,7 @@
         </ng2-picker-block>
       </td>
     </tr>
-    <tr class="popup-bottom">
+    <tr class="popup-bottom" *ngIf="!autoClose">
       <td class="popup-bottom-buttons" colspan="2">
         <button class="btn btn-sm btn-primary close-button" (click)="closePicker()">Close</button>
       </td>

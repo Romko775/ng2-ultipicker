@@ -36,6 +36,8 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
   @Input() inputDayFormat = 'MM-DD-YYYY';
    inputMonthFormat = 'MM-YYYY';
 
+  @Input() autoClose = false;
+
   @Input() dayNames;
   @Input() monthNames;
 
@@ -115,6 +117,10 @@ export class UltipickerMonoComponent implements OnInit, AfterViewInit {
 
   setDate(date: momentImported.Moment) {
     this.componentForm.get('selectedDate').setValue(date);
+
+    if (this.autoClose) {
+      this.closePicker();
+    }
   }
 
   setDefault(defaultSet: DefaultSet) {

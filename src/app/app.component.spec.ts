@@ -1,16 +1,22 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {UltipickerDualComponent} from '../../projects/ultipicker/src/lib/ultipicker-dual/ultipicker-dual.component';
-import {UltipickerMonoComponent} from '../../projects/ultipicker/src/lib/ultipicker-mono/ultipicker-mono.component';
+import {UltipickerModule} from '../../projects/ultipicker/src/lib/ultipicker.module';
+import {FormBuilder} from '@angular/forms';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
-        UltipickerDualComponent,
-        UltipickerMonoComponent
+        AppComponent
       ],
+      imports: [
+        UltipickerModule
+      ],
+      providers: [
+        FormBuilder
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -20,16 +26,4 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'ulti-picker'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ulti-picker');
-  });
-
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to ulti-picker!');
-  });
 });

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UltipickerDualComponent } from './ultipicker-dual.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormBuilder} from '@angular/forms';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('UltipickerDualComponent', () => {
   let component: UltipickerDualComponent;
@@ -14,11 +14,12 @@ describe('UltipickerDualComponent', () => {
         UltipickerDualComponent
       ],
       imports: [
-        FontAwesomeModule
+
       ],
       providers: [
         FormBuilder
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -26,10 +27,15 @@ describe('UltipickerDualComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UltipickerDualComponent);
     component = fixture.componentInstance;
+    component.inputDayFormat = 'DD/MM/YYYY';
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should generate input mask', () => {
+    expect(component.dayMask).toBe('99/99/9999');
   });
 });

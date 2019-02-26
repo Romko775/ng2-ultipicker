@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UltipickerMonoComponent } from './ultipicker-mono.component';
-import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {FormBuilder} from '@angular/forms';
+import {NO_ERRORS_SCHEMA} from '@angular/core';
 
 describe('UltipickerMonoComponent', () => {
   let component: UltipickerMonoComponent;
@@ -14,11 +14,12 @@ describe('UltipickerMonoComponent', () => {
         UltipickerMonoComponent
       ],
       imports: [
-        FontAwesomeModule
+
       ],
       providers: [
-        FormBuilder,
-      ]
+        FormBuilder
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
@@ -26,10 +27,16 @@ describe('UltipickerMonoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UltipickerMonoComponent);
     component = fixture.componentInstance;
+    component.inputDayFormat = 'DD/MM/YYYY';
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should generate input mask', () => {
+    expect(component.dayMask).toBe('99/99/9999');
+  });
+
 });
