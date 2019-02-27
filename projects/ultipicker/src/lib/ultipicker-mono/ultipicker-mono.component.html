@@ -1,0 +1,37 @@
+<div class="ultipicker-mono">
+  <div class="input-group mb-2">
+    <input #pickerInput type="text" class="form-control" [value]="formatDate">
+    <div class="input-group-append">
+
+      <button class="btn btn-outline-secondary" type="button" (click)="togglePicker()">
+        <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+
+  <table class="popup-table" [formGroup]="componentForm" [style.visibility]="pickerVisibility ? 'visible' : 'hidden'">
+    <tr>
+      <td class="ranges-column">
+        <ul>
+          <li *ngFor="let defaultSet of defaultSets" (click)="setDefault(defaultSet)">{{defaultSet.key}}</li>
+        </ul>
+      </td>
+
+      <td class="start-date-column">
+        <ng2-picker-block (onselect)="setDate($event)"
+                          [monthNames]="monthNames"
+                          [dayNames]="dayNames"
+                          [minDate]="minDate"
+                          [maxDate]="maxDate"
+                          [defaultDate]="getValue('selectedDate')">
+        </ng2-picker-block>
+      </td>
+    </tr>
+    <tr class="popup-bottom" *ngIf="!autoClose">
+      <td class="popup-bottom-buttons" colspan="2">
+        <button class="btn btn-sm btn-primary close-button" (click)="closePicker()">Close</button>
+      </td>
+    </tr>
+  </table>
+</div>

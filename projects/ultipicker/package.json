@@ -1,8 +1,33 @@
 {
   "name": "ultipicker",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "A fancy datepicker for angular",
+  "license": "MIT",
+  "author": "Roman Yanush",
+  "keywords": [
+    "angular",
+    "angular 2",
+    "angular 7",
+    "ng",
+    "ng2",
+    "moment",
+    "picker",
+    "datepicker",
+    "date",
+    "dates"
+  ],
+  "repository": "https://github.com/Romko775/ng2-ultipicker",
   "peerDependencies": {
     "@angular/common": "^7.0.0",
     "@angular/core": "^7.0.0"
+  },
+  "dependencies": {
+    "moment": "^2.24.0",
+    "ngx-bootstrap": "^3.2.0",
+    "@fortawesome/angular-fontawesome": "^0.3.0",
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-regular-svg-icons": "^5.7.2",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "inputmask": "^4.0.6"
   }
 }

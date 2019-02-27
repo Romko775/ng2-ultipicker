@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+
+import * as momentImported from 'moment';
+
+const moment = momentImported;
 
 @Component({
   selector: 'app-root',
@@ -6,5 +10,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ulti-picker';
+
+  minDate = moment().subtract(2, 'month');
+  maxDate = moment().add(2, 'month');
+  defaultStartDate = moment();
+  defaultEndDate = moment().add(7, 'day');
 }

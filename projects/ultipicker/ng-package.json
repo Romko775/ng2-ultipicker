@@ -3,5 +3,14 @@
   "dest": "../../dist/ultipicker",
   "lib": {
     "entryFile": "src/public_api.ts"
-  }
+  },
+  "whitelistedNonPeerDependencies": [
+    "moment",
+    "ngx-bootstrap",
+    "@fortawesome/angular-fontawesome",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-regular-svg-icons",
+    "@fortawesome/free-solid-svg-icons",
+    "inputmask"
+  ]
 }

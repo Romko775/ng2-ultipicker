@@ -1,0 +1,98 @@
+.picker {
+  max-width: 200px;
+  min-width: 200px;
+  max-height: 300px;
+  min-height: 150px;
+  //border: 1px solid black;
+
+  &-header {
+    display: flex;
+    justify-content: space-around;
+    margin: 5px 0;
+    align-items: center;
+
+    .header-month {
+      width: 120px;
+      text-align: center;
+    }
+
+    .header-button {
+      background-color: transparent;
+      border: 1px solid black;
+      border-radius: 50%;
+      height: 22px;
+      width: 22px;
+      text-align: center;
+      line-height: 22px;
+    }
+    button:focus {
+      outline:0;
+    }
+
+    button:disabled, button[disabled] {
+      cursor: not-allowed;
+    }
+  }
+
+  hr {
+    margin: 5px 0;
+  }
+
+  &-table {
+    margin: 0 auto;
+
+    tr {
+      td {
+        padding: 0;
+      }
+    }
+
+    .week-column {
+      width: 20px;
+      text-align: center;
+    }
+
+    .dayname-cell {
+      cursor: default;
+    }
+
+    .day-cell {
+      text-align: center;
+
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        padding: 0;
+        border-radius: 50%;
+      }
+
+      button:focus {
+        outline:0;
+      }
+
+      button:disabled, button[disabled] {
+        cursor: not-allowed;
+        text-decoration: line-through;
+        color: grey !important;
+      }
+
+      button.current-month {
+        color: black;
+      }
+
+      button.not-current-month {
+        color: grey;
+      }
+
+      button.selected {
+        background-color: blue !important;
+        color: white !important;
+      }
+    }
+  }
+
+}

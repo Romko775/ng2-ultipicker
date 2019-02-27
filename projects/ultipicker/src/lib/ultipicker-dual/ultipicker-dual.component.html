@@ -1,0 +1,48 @@
+<div class="ultipicker-dual">
+
+  <div class="input-group mb-2">
+    <input type="text" class="form-control" [value]="mainInput" readonly (click)="togglePicker()">
+    <div class="input-group-append">
+
+      <button class="btn btn-outline-secondary" type="button" (click)="togglePicker()">
+        <fa-icon [icon]="['far', 'calendar-alt']"></fa-icon>
+      </button>
+    </div>
+  </div>
+
+  <table class="popup-table" [formGroup]="componentForm" [style.visibility]="pickerVisibility ? 'visible' : 'hidden'">
+    <tr>
+      <td class="ranges-column" rowspan="2">
+        <ul>
+          <li *ngFor="let range of ranges" (click)="setRange(range)">{{range.key}}</li>
+        </ul>
+      </td>
+
+      <td class="start-date-column">
+        <input type="text" #startInput [value]="formatStartDate">
+        <ng2-picker-block (onselect)="setStartDate($event)"
+                          [monthNames]="monthNames"
+                          [dayNames]="dayNames"
+                          [minDate]="minStartDate"
+                          [maxDate]="currentEndDate"
+                          [defaultDate]="currentStartDate">
+        </ng2-picker-block>
+      </td>
+      <td class="end-date-column">
+        <input type="text" #endInput [value]="formatEndDate">
+        <ng2-picker-block (onselect)="setEndDate($event)"
+                          [monthNames]="monthNames"
+                          [dayNames]="dayNames"
+                          [minDate]="currentStartDate"
+                          [maxDate]="maxEndDate"
+                          [defaultDate]="currentEndDate">
+        </ng2-picker-block>
+      </td>
+    </tr>
+    <tr class="popup-bottom">
+      <td class="popup-bottom-buttons" colspan="3">
+        <button class="btn btn-sm btn-primary close-button" (click)="closePicker()">Close</button>
+      </td>
+    </tr>
+  </table>
+</div>
