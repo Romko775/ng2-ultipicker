@@ -181,6 +181,8 @@ export class PickerBlockComponent implements OnInit {
       this.pickerMonth = moment(this.pickerMonth).startOf('day');
     }
 
+    this.emitChanges();
+
     this.navigateMonth(this.pickerMonth);
   }
 

@@ -90,7 +90,7 @@ export class UltipickerMonoComponent implements OnInit, OnDestroy, AfterViewInit
       selectedDate: [this.defaultDate]
     });
 
-    this.componentForm.valueChanges.subscribe(() => {
+    this.componentFormSub = this.componentForm.valueChanges.subscribe(() => {
       this.fireChanges();
     });
 

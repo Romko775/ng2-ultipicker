@@ -134,7 +134,7 @@ export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit
       ]],
     });
 
-    this.componentForm.valueChanges.subscribe(() => {
+    this.componentFormSub = this.componentForm.valueChanges.subscribe(() => {
       this.fireChanges();
     });
 
