@@ -9,6 +9,11 @@
 ![](https://img.shields.io/github/languages/code-size/romko775/ng2-ultipicker.svg?style=flat-square)
 ![](https://img.shields.io/github/languages/count/romko775/ng2-ultipicker.svg?style=flat-square)
 
+***
+## Demo
+#### Follow [https://romko775.github.io/ng2-ultipicker/](https://romko775.github.io/ng2-ultipicker/) to see how pickers look
+***
+
 ## Getting started
 ### Step 1: Install 
 
