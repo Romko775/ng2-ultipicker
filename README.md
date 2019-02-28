@@ -1,4 +1,4 @@
-# MomentTimezonePicker
+# Ultipicker: moment based datepicker
 [![NPM](https://nodei.co/npm/ultipicker.png)](https://nodei.co/npm/ultipicker/)
 
 ![npm version](https://img.shields.io/npm/v/ultipicker.svg?style=flat-square)
@@ -12,6 +12,10 @@
 ***
 ## Demo
 #### Follow [https://romko775.github.io/ng2-ultipicker/](https://romko775.github.io/ng2-ultipicker/) to see how pickers look
+***
+
+## Log of changes
+### Follow [https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md](https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md) to see changes
 ***
 
 ## Getting started
@@ -164,3 +168,7 @@ Works with Reactive Forms. Just add `[formControlName]`.
 
 ### Contributor
 - [Roman Yanush](https://github.com/Romko775/)
+
+### Inspired by 
+- [Vlad Loffe](https://github.com/vlio20)
+- [Dan Grossman](https://github.com/dangrossman)
