@@ -12,7 +12,7 @@ const moment = momentImported;
 export class AppComponent {
 
   minDate = moment().subtract(2, 'month');
-  maxDate = moment().add(2, 'month');
+  maxDate = moment().add(2, 'year');
   defaultStartDate = moment();
   defaultEndDate = moment().add(7, 'day');
 }
