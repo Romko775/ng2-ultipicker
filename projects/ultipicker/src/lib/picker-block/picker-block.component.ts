@@ -94,7 +94,20 @@ export class PickerBlockComponent implements OnInit {
 
   @Input() setDisable = false;
 
-  @Input() dayNames: Array<string> = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
+  private _dayNames: Array<string>;
+  @Input('dayNames')
+  set dayNames(namesArr: Array<string>) {
+    if (namesArr !== null && namesArr !== undefined && namesArr.length === 7) {
+      this._dayNames = namesArr;
+    } else {
+      this._dayNames = ['Su', 'Mo', 'Tu', 'Wd', 'Th', 'Fr', 'St'];
+    }
+  }
+
+  get dayNames(): Array<string> {
+    return this._dayNames;
+  }
+
 
   private _monthNames: Array<string>;
   @Input('monthNames')
@@ -132,11 +145,13 @@ export class PickerBlockComponent implements OnInit {
 
 
   calendar: Array<Calendar>;
+  isoCalendar: Array<Calendar>;
 
   constructor() {
   }
 
   ngOnInit() {
+    console.log(this.dayNames);
     this.setCalendar();
   }
 
@@ -159,11 +174,23 @@ export class PickerBlockComponent implements OnInit {
 
   setCalendar(): void {
     this.calendar = [];
+    this.isoCalendar = [];
+
     for (let week = this.startWeek; week <= this.endWeek; week++) {
       this.calendar.push({
         week: week,
         days: Array(7).fill(0).map((n, i) => {
             return moment(this.pickerMonth).day(i).week(week);
+          }
+        )
+      });
+    }
+
+    for (let week = this.startWeek; week <= this.endWeek; week++) {
+      this.isoCalendar.push({
+        week: week,
+        days: Array(7).fill(0).map((n, i) => {
+            return moment(this.pickerMonth).day(i).isoWeek(week);
           }
         )
       });
