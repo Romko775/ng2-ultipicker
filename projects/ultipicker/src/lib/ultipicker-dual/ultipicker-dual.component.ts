@@ -36,6 +36,31 @@ export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild('startInput') startInput: ElementRef;
   @ViewChild('endInput') endInput: ElementRef;
 
+
+  private _showCalendarWeeks = false;
+  @Input('showCalendarWeeks')
+  set showCalendarWeeks(bool: boolean) {
+    this._showCalendarWeeks = bool;
+  }
+
+  get showCalendarWeeks(): boolean {
+    return this._showCalendarWeeks;
+  }
+
+  private _isoWeekConfig = 0;
+  @Input('isoWeekConfig')
+  set isoWeekConfig(val: number) {
+    if (val === 0 || val === 1) {
+      this._isoWeekConfig = val;
+    } else {
+      this._isoWeekConfig = 0;
+    }
+  }
+
+  get isoWeekConfig(): number {
+    return this._isoWeekConfig;
+  }
+
   @Input() minStartDate: momentImported.Moment = null;
   @Input() maxEndDate: momentImported.Moment = null;
   @Input() defaultStartDate: momentImported.Moment = moment();
@@ -72,7 +97,7 @@ export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit
     },
     {
       key: 'This week',
-      start: moment().startOf('week'),
+      start: this.isoWeekConfig === 0 ? moment().startOf('week') : moment().startOf('isoWeek'),
       end: moment()
     },
     {
@@ -87,8 +112,8 @@ export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit
     },
     {
       key: 'Last week',
-      start: moment().subtract(1, 'week').startOf('week'),
-      end: moment().subtract(1, 'week').endOf('week')
+      start: this.isoWeekConfig === 0 ? moment().subtract(1, 'week').startOf('week') : moment().subtract(1, 'week').startOf('isoWeek'),
+      end: this.isoWeekConfig === 0 ? moment().subtract(1, 'week').endOf('week') : moment().subtract(1, 'week').endOf('isoWeek')
     },
     {
       key: 'Last month',

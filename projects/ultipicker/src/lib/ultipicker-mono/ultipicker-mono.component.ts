@@ -38,6 +38,30 @@ export class UltipickerMonoComponent implements OnInit, OnDestroy, AfterViewInit
 
   @Input() autoClose = false;
 
+  private _showCalendarWeeks = false;
+  @Input('showCalendarWeeks')
+  set showCalendarWeeks(bool: boolean) {
+    this._showCalendarWeeks = bool;
+  }
+
+  get showCalendarWeeks(): boolean {
+    return this._showCalendarWeeks;
+  }
+
+  private _isoWeekConfig = 0;
+  @Input('isoWeekConfig')
+  set isoWeekConfig(val: number) {
+    if (val === 0 || val === 1) {
+      this._isoWeekConfig = val;
+    } else {
+      this._isoWeekConfig = 0;
+    }
+  }
+
+  get isoWeekConfig(): number {
+    return this._isoWeekConfig;
+  }
+
   @Input() dayNames;
   @Input() monthNames;
 
@@ -52,7 +76,7 @@ export class UltipickerMonoComponent implements OnInit, OnDestroy, AfterViewInit
     },
     {
       key: 'Start of week',
-      value: moment().startOf('week')
+      value: this.isoWeekConfig === 0 ? moment().startOf('week') : moment().startOf('isoWeek')
     },
     {
       key: 'Start of month',

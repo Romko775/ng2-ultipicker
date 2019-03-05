@@ -15,7 +15,7 @@
 ***
 
 ## Log of changes
-### Follow [https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md](https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md) to see changes
+#### Follow [https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md](https://github.com/Romko775/ng2-ultipicker/blob/master/projects/ultipicker/LOGS.md) to see changes
 ***
 
 ## Getting started
@@ -67,7 +67,9 @@ export class AppModule { }
 | defaultEndDate | moment.Moment | `moment()` | no | The date of end date picker |
 | inputDayFormat | string | `MM-DD-YYYY` | no | The date format in which moment time transforms |
 | separator | string | `' - '` | no | The separator for readonly input between dates |
-| dayNames | Array<string> | `['Su', ... 'St']` | no | Can set local day names. `Order only when first day is Sunday`. First day Monday temporary not supported |
+| dayNames | Array<string> | `['Su', ... 'St']` | no | Can set local day names. Order only when first day is `Sunday`. Auto shifts to Monday if `isoWeekConfig = 1` |
+| isoWeekConfig | number | `0` | no | 0 - first day Sunday. 1 - first day Monday |
+| showCalendarWeeks | boolean | `false` | no | Show or hide calendar weeks numbers |
 | monthNames | Array<string> | `['January', ... 'December']` | no | Can set local names for months |
 | ranges | Array<Range> | See ranges | no | Can set predetermined ranges | 
 
@@ -135,7 +137,9 @@ Works with Reactive Forms. Just add `[formControlName]`.
 | maxDate | moment.Moment | `null` | no | The maximal end date that user can select |
 | defaultDate | moment.Moment | `moment()` | no | The default date of picker |
 | inputDayFormat | string | `MM-DD-YYYY` | no | The date format in which moment time transforms |
-| dayNames | Array<string> | `['Su', ... 'St']` | no | Can set local day names. `Order only when first day is Sunday`. First day Monday temporary not supported |
+| dayNames | Array<string> | `['Su', ... 'St']` | no | Can set local day names. Order only when first day is `Sunday`. Auto shifts to Monday if `isoWeekConfig = 1` |
+| isoWeekConfig | number | `0` | no | 0 - first day Sunday. 1 - first day Monday |
+| showCalendarWeeks | boolean | `false` | no | Show or hide calendar weeks numbers |
 | monthNames | Array<string> | `['January', ... 'December']` | no | Can set local names for months |
 | autoClose | boolean | `false` | no | If true closes the picker when user selected the date |
 | defaultSets | Array<DefaultSet> | See defaultSets| no | Can set predetermined date sets |
@@ -170,5 +174,5 @@ Works with Reactive Forms. Just add `[formControlName]`.
 - [Roman Yanush](https://github.com/Romko775/)
 
 ### Inspired by 
-- [Vlad Loffe](https://github.com/vlio20)
+- [Vlad Ioffe](https://github.com/vlio20)
 - [Dan Grossman](https://github.com/dangrossman)
