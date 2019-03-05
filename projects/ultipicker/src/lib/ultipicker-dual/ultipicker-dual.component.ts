@@ -36,6 +36,8 @@ export class UltipickerDualComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild('startInput') startInput: ElementRef;
   @ViewChild('endInput') endInput: ElementRef;
 
+
+  @Input() isoWeekConfig = 0;
   @Input() minStartDate: momentImported.Moment = null;
   @Input() maxEndDate: momentImported.Moment = null;
   @Input() defaultStartDate: momentImported.Moment = moment();

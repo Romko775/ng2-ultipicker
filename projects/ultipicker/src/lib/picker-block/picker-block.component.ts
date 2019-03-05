@@ -155,7 +155,7 @@ export class PickerBlockComponent implements OnInit {
   st = Stage;
 
   startWeek = this.isoWeekConfig === 0 ?
-    moment(this.pickerMonth).startOf('month').week() : moment(this.pickerMonth).startOf('month').isoWeek();
+    moment(this.pickerMonth).subtract(1, 'month').endOf('month').week() : moment(this.pickerMonth).subtract(1, 'month').endOf('month').isoWeek();
   endWeek = this.isoWeekConfig === 0 ?
     moment(this.pickerMonth).add(1, 'month').startOf('month').week() : moment(this.pickerMonth).add(1, 'month').startOf('month').isoWeek();
 
@@ -200,7 +200,7 @@ export class PickerBlockComponent implements OnInit {
 
       for (let i = this.isoWeekConfig; i < 7 + this.isoWeekConfig; i++) {
         if (this.isoWeekConfig === 1) {
-          daysOfWeek.push(moment(this.pickerMonth).isoWeek(week).day(i));
+          daysOfWeek.push(moment(this.pickerMonth).isoWeek(week).isoWeekday(i));
         } else {
           daysOfWeek.push(moment(this.pickerMonth).week(week).day(i));
         }
@@ -221,16 +221,24 @@ export class PickerBlockComponent implements OnInit {
       this.pickerMonth = moment(this.pickerMonth).add(1, 'month');
     }
     if (stage === this.st.current) {
-      this.pickerMonth = moment(this.pickerMonth).startOf('day');
+      this.pickerMonth = moment(this.pickerMonth).startOf('month');
     }
 
-    this.emitChanges();
-
     this.navigateMonth(this.pickerMonth);
+
+    console.log(this.startWeek);
+    console.log(this.endWeek);
+
+    this.emitChanges();
   }
 
   navigateMonth(date: momentImported.Moment) {
-    this.startWeek = this.isoWeekConfig === 0 ? moment(date).startOf('month').week() : moment(date).startOf('month').isoWeek();
+    this.startWeek = this.isoWeekConfig === 0 ?
+      moment(date).subtract(1, 'month').endOf('month').week() : moment(date).subtract(1, 'month').endOf('month').isoWeek();
+    if (this.startWeek === 52 || this.startWeek === 53) {
+      this.startWeek = 1;
+    }
+
     this.endWeek = this.isoWeekConfig === 0 ?
       moment(date).add(1, 'month').startOf('month').week() : moment(date).add(1, 'month').startOf('month').isoWeek();
     if (this.endWeek === 1) {
@@ -266,6 +274,9 @@ export class PickerBlockComponent implements OnInit {
   }
 
   selectDate(day: momentImported.Moment): void {
+
+    console.log(day);
+
     this.selectedDate = moment(day);
 
     if (moment(day).startOf('month').isBefore(moment(this.pickerMonth).startOf('month'))) {

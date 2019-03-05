@@ -23,6 +23,7 @@
         <ng2-picker-block (onselect)="setStartDate($event)"
                           [monthNames]="monthNames"
                           [dayNames]="dayNames"
+                          [isoWeekConfig]="isoWeekConfig"
                           [minDate]="minStartDate"
                           [maxDate]="currentEndDate"
                           [defaultDate]="currentStartDate">
@@ -33,6 +34,7 @@
         <ng2-picker-block (onselect)="setEndDate($event)"
                           [monthNames]="monthNames"
                           [dayNames]="dayNames"
+                          [isoWeekConfig]="isoWeekConfig"
                           [minDate]="currentStartDate"
                           [maxDate]="maxEndDate"
                           [defaultDate]="currentEndDate">

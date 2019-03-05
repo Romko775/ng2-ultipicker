@@ -37,6 +37,7 @@ export class UltipickerMonoComponent implements OnInit, OnDestroy, AfterViewInit
   inputMonthFormat = 'MM-YYYY';
 
   @Input() autoClose = false;
+  @Input() isoWeekConfig = 0;
 
   @Input() dayNames;
   @Input() monthNames;
