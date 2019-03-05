@@ -14,6 +14,11 @@ export class Calendar {
   days: Array<momentImported.Moment>;
 }
 
+class WeekInMonth {
+  week: number;
+  year: number;
+}
+
 @Component({
   selector: 'ng2-picker-block',
   templateUrl: './picker-block.component.html',
@@ -21,6 +26,16 @@ export class Calendar {
   encapsulation: ViewEncapsulation.None
 })
 export class PickerBlockComponent implements OnInit {
+
+  private _showCalendarWeeks = false;
+  @Input('showCalendarWeeks')
+  set showCalendarWeeks(bool: boolean) {
+    this._showCalendarWeeks = bool;
+  }
+
+  get showCalendarWeeks(): boolean {
+    return this._showCalendarWeeks;
+  }
 
   private _isoWeekConfig = 0;
   @Input('isoWeekConfig')
@@ -154,11 +169,14 @@ export class PickerBlockComponent implements OnInit {
 
   st = Stage;
 
-  startWeek = this.isoWeekConfig === 0 ?
-    moment(this.pickerMonth).subtract(1, 'month').endOf('month').week() : moment(this.pickerMonth).subtract(1, 'month').endOf('month').isoWeek();
-  endWeek = this.isoWeekConfig === 0 ?
-    moment(this.pickerMonth).add(1, 'month').startOf('month').week() : moment(this.pickerMonth).add(1, 'month').startOf('month').isoWeek();
+  private _weeksInMonth: Array<WeekInMonth>;
+  set weeksInMonth(arr: Array<WeekInMonth>) {
+    this._weeksInMonth = arr;
+  }
 
+  get weeksInMonth(): Array<WeekInMonth> {
+    return this._weeksInMonth;
+  }
 
   calendar: Array<Calendar>;
 
@@ -167,11 +185,39 @@ export class PickerBlockComponent implements OnInit {
 
   ngOnInit() {
 
+    this.setWeeksInMonth(this.pickerMonth);
+
     if (this.isoWeekConfig === 1) {
       this._dayNames.push(this._dayNames.shift());
     }
 
     this.setCalendar();
+  }
+
+  setWeeksInMonth(month: momentImported.Moment) {
+
+    let date = month.startOf('month').subtract(1, 'day');
+    const weekArr: Array<WeekInMonth> = [];
+
+    for (let i = 0; i < 6; i++) {
+
+      if (this.isoWeekConfig === 1) {
+        weekArr.push({
+          week: date.isoWeek(),
+          year: date.isoWeekYear()
+        });
+      } else {
+        weekArr.push({
+          week: date.week(),
+          year: date.weekYear()
+        });
+      }
+
+      date = date.add(1, 'week').clone();
+    }
+
+    this.weeksInMonth = weekArr;
+
   }
 
   setUpDates(): void {
@@ -194,23 +240,36 @@ export class PickerBlockComponent implements OnInit {
   setCalendar(): void {
     this.calendar = [];
 
-    for (let week = this.startWeek; week <= this.endWeek; week++) {
+    this.weeksInMonth.forEach(pair => {
 
       const daysOfWeek = [];
 
-      for (let i = this.isoWeekConfig; i < 7 + this.isoWeekConfig; i++) {
-        if (this.isoWeekConfig === 1) {
-          daysOfWeek.push(moment(this.pickerMonth).isoWeek(week).isoWeekday(i));
-        } else {
-          daysOfWeek.push(moment(this.pickerMonth).week(week).day(i));
-        }
+      if (this.isoWeekConfig === 1) {
+        daysOfWeek.push(moment(this.pickerMonth).day('Monday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Tuesday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Wednesday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Thursday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Friday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Saturday').isoWeekYear(pair.year).isoWeek(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Sunday').isoWeekYear(pair.year).isoWeek(pair.week));
+      } else {
+        daysOfWeek.push(moment(this.pickerMonth).day('Sunday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Monday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Tuesday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Wednesday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Thursday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Friday').weekYear(pair.year).week(pair.week));
+        daysOfWeek.push(moment(this.pickerMonth).day('Saturday').weekYear(pair.year).week(pair.week));
+
       }
 
       this.calendar.push({
-        week: week,
+        week: pair.week,
         days: daysOfWeek
       });
-    }
+
+    });
+
   }
 
   changeMonth(stage: Stage): void {
@@ -224,27 +283,14 @@ export class PickerBlockComponent implements OnInit {
       this.pickerMonth = moment(this.pickerMonth).startOf('month');
     }
 
+    this.setWeeksInMonth(this.pickerMonth);
     this.navigateMonth(this.pickerMonth);
-
-    console.log(this.startWeek);
-    console.log(this.endWeek);
 
     this.emitChanges();
   }
 
   navigateMonth(date: momentImported.Moment) {
-    this.startWeek = this.isoWeekConfig === 0 ?
-      moment(date).subtract(1, 'month').endOf('month').week() : moment(date).subtract(1, 'month').endOf('month').isoWeek();
-    if (this.startWeek === 52 || this.startWeek === 53) {
-      this.startWeek = 1;
-    }
-
-    this.endWeek = this.isoWeekConfig === 0 ?
-      moment(date).add(1, 'month').startOf('month').week() : moment(date).add(1, 'month').startOf('month').isoWeek();
-    if (this.endWeek === 1) {
-      this.endWeek = 53;
-    }
-
+    this.setWeeksInMonth(date);
     this.setUpArrows();
     this.setCalendar();
   }
@@ -274,8 +320,6 @@ export class PickerBlockComponent implements OnInit {
   }
 
   selectDate(day: momentImported.Moment): void {
-
-    console.log(day);
 
     this.selectedDate = moment(day);
 

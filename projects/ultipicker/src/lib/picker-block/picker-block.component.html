@@ -16,11 +16,11 @@
   <hr>
   <table class="picker-table">
     <tr>
-      <th></th>
+      <th *ngIf="showCalendarWeeks"></th>
       <th class="dayname-cell" *ngFor="let dayName of dayNames">{{dayName}}</th>
     </tr>
     <tr *ngFor="let weeks of calendar">
-      <td class="week-cell">{{weeks.week}}</td>
+      <td *ngIf="showCalendarWeeks" class="week-cell">{{weeks.week}}</td>
       <td *ngFor="let day of weeks.days" class="day-cell">
         <button [ngClass]="getDayClass(day)"
                 (click)="selectDate(day)"

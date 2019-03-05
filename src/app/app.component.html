@@ -1,27 +1,37 @@
 <div class="demo">
-  <h2>Dual picker</h2>
-  <ng2-ultipicker-dual [minStartDate]="minDate"
-                       [maxEndDate]="maxDate"
-                       [defaultStartDate]="defaultStartDate"
-                       [defaultEndDate]="defaultEndDate">
-  </ng2-ultipicker-dual>
-  <br>
-  <br>
-  <br>
-  <h2>Mono picker</h2>
-  <ng2-ultipicker-mono [minDate]="minDate"
-                       [maxDate]="maxDate"
-                       [isoWeekConfig]="1"
-                       [defaultDate]="defaultStartDate">
-  </ng2-ultipicker-mono>
-  <br>
-  <br>
-  <br>
-  <div>
-    <p>For all pickers set:</p>
-    <p>Min date - {{minDate.format('MM-DD-YYYY')}}</p>
-    <p>Max date - {{maxDate.format('MM-DD-YYYY')}}</p>
-  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2>Dual picker</h2>
+      <ng2-ultipicker-dual [minStartDate]="minDate"
+                           [maxEndDate]="maxDate"
+                           [isoWeekConfig]="0"
+                           [defaultStartDate]="defaultStartDate"
+                           [defaultEndDate]="defaultEndDate">
+      </ng2-ultipicker-dual>
+      <br>
+      <p>Configuration:</p>
+      <p>Min date - {{minDate.format('MM-DD-YYYY')}}</p>
+      <p>Max date - {{maxDate.format('MM-DD-YYYY')}}</p>
+      <p>isoWeekConfig - <b>0</b></p>
+      <p>showCalendarWeeks - <b>false</b></p>
+    </div>
 
+
+    <div class="col-md-6">
+      <h2>Mono picker</h2>
+      <ng2-ultipicker-mono [minDate]="minDate"
+                           [maxDate]="maxDate"
+                           [isoWeekConfig]="1"
+                           [defaultDate]="defaultStartDate"
+                           [showCalendarWeeks]="true">
+      </ng2-ultipicker-mono>
+      <br>
+      <p>Configuration:</p>
+      <p>Min date - {{minDate.format('MM-DD-YYYY')}}</p>
+      <p>Max date - {{maxDate.format('MM-DD-YYYY')}}</p>
+      <p>isoWeekConfig - <b>1</b></p>
+      <p>showCalendarWeeks - <b>true</b></p>
+    </div>
+  </div>
 </div>
 
